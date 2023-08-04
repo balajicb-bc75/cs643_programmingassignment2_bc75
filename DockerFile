@@ -1,0 +1,19 @@
+# Use the official PySpark base image
+FROM jupyter/pyspark-notebook:latest
+
+
+
+# Copy your PySpark application code to the container
+COPY prediction.py /app/wineprediction_app.py
+COPY TrainingDataset.csv /app/TrainingDataset.csv
+COPY ValidationDataset.csv /app/ValidationDataset.csv
+COPY lr_model/ /app/lr_model/
+COPY rf_model/ /app/rf_model/
+
+
+# Set the working directory
+WORKDIR /app
+
+# Run the PySpark application when the container starts
+CMD ["spark-submit", "wineprediction_app.py", "ValidationDataset.csv"]
+
